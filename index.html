@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convai Widget</title>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+    }
+    elevenlabs-convai {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <elevenlabs-convai id="convai-widget" agent-id=""></elevenlabs-convai>
+  <script>
+    // Read agentId from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const agentId = urlParams.get('agentId');
+    const agent = document.getElementById('convai-widget');
+    if(agentId && agent) {
+      agent.setAttribute('agent-id', agentId);
+      if(agent.open) agent.open();
+    }
+  </script>
+</body>
+</html>
+//

@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.iamguru.ai",
+      "sha256_cert_fingerprints": [
+        "5D:F9:2A:18:BD:EF:DF:A5:07:55:56:3A:C3:4A:08:D7:6E:93:6E:E6:B5:4A:82:A5:45:74:D5:D8:9A:1A:87:4A",
+        "FC:8D:E1:5A:6C:EA:73:95:37:D8:86:42:3D:5C:21:89:46:DC:8F:A8:82:5B:B1:12:F3:38:8E:00:78:5D:62:00"
+      ]
+    }
+  }
+]

@@ -49,43 +49,45 @@
   <!-- Button to open app -->
   <button onclick="openApp()">Open in App</button>
 
-  <!-- Clickable fallback link -->
-  <p>
-    <a href="iamguru://open/profile?inviteCode=ABC123">Try opening in app</a>
-  </p>
+  <!-- Fallback link -->
+  <p id="fallback-link"></p>
 
   <!-- Your existing Convai widget -->
   <elevenlabs-convai id="convai-widget" agent-id=""></elevenlabs-convai>
 
   <script>
-    // Function to open the Flutter app
-    function openApp() {
-      const inviteCode = "ABC123"; // you can make this dynamic later
-      const appLink = `iamguru://open/profile?inviteCode=${inviteCode}`;
+    // Extract inviteCode and agentId from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const inviteCode = urlParams.get('inviteCode') || 'DEFAULT123';
+    const agentId = urlParams.get('agentId');
 
-      // Try to open app
+    // Function to open app
+    function openApp() {
+      const appLink = `iamguru://open/profile?inviteCode=${inviteCode}`;
+      console.log('Trying to open app:', appLink);
       window.location = appLink;
 
-      // Fallback: open Convai widget if app not installed
+      // Fallback to web widget if app not installed
       setTimeout(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const agentId = urlParams.get('agentId');
-        const agent = document.getElementById('convai-widget');
-        if (agentId && agent) {
-          agent.setAttribute('agent-id', agentId);
-          if (agent.open) agent.open();
-        }
+        loadWidget();
       }, 1500);
     }
 
-    // Automatically initialize Convai widget if no app link is used
-    const urlParams = new URLSearchParams(window.location.search);
-    const agentId = urlParams.get('agentId');
-    const agent = document.getElementById('convai-widget');
-    if (agentId && agent) {
-      agent.setAttribute('agent-id', agentId);
-      if (agent.open) agent.open();
+    // Create clickable fallback link dynamically
+    const linkEl = document.getElementById('fallback-link');
+    linkEl.innerHTML = `<a href="iamguru://open/profile?inviteCode=${inviteCode}">Try opening in app manually</a>`;
+
+    // Initialize Convai widget if app not opened
+    function loadWidget() {
+      const agent = document.getElementById('convai-widget');
+      if (agentId && agent) {
+        agent.setAttribute('agent-id', agentId);
+        if (agent.open) agent.open();
+      }
     }
+
+    // Auto-init Convai widget for normal visits
+    loadWidget();
   </script>
 </body>
 </html>
